@@ -1,0 +1,57 @@
+def merge(arr, left, mid, right):
+    # Create temporary arrays
+    left_part = arr[left:mid + 1]
+    right_part = arr[mid + 1:right + 1]
+
+    i = 0
+    j = 0
+    k = left
+
+    # Compare elements from both parts
+    while i < len(left_part) and j < len(right_part):
+        if left_part[i] <= right_part[j]:
+            arr[k] = left_part[i]
+            i += 1
+        else:
+            arr[k] = right_part[j]
+            j += 1
+        k += 1
+
+    # Copy remaining elements from left part
+    while i < len(left_part):
+        arr[k] = left_part[i]
+        i += 1
+        k += 1
+
+    # Copy remaining elements from right part
+    while j < len(right_part):
+        arr[k] = right_part[j]
+        j += 1
+        k += 1
+
+
+def merge_sort(arr, left, right):
+    if left < right:
+        # Find the middle position
+        mid = (left + right) // 2
+
+        # Sort the left half
+        merge_sort(arr, left, mid)
+
+        # Sort the right half
+        merge_sort(arr, mid + 1, right)
+
+        # Merge both sorted halves
+        merge(arr, left, mid, right)
+
+
+# Main program
+arr = [38, 27, 43, 3, 9, 82, 10]
+
+print("Original array:")
+print(arr)
+
+merge_sort(arr, 0, len(arr) - 1)
+
+print("Sorted array:")
+print(arr)
