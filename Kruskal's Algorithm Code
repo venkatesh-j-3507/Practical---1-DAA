@@ -1,0 +1,37 @@
+def kruskal(edges, n):
+    parent = list(range(n))
+    total = 0
+
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+
+    print("Minimum Spanning Tree:")
+
+    edges.sort(key=lambda x: x[2])
+
+    for u, v, w in edges:
+        a = find(u)
+        b = find(v)
+
+        if a != b:
+            print(u, "-", v, "=", w)
+            parent[a] = b
+            total += w
+
+    print("Total Cost =", total)
+
+
+# User input
+n = int(input("Enter number of vertices: "))
+e = int(input("Enter number of edges: "))
+
+edges = []
+
+print("Enter edges (u v weight):")
+for i in range(e):
+    u, v, w = map(int, input().split())
+    edges.append((u, v, w))
+
+kruskal(edges, n)
