@@ -1,0 +1,27 @@
+def making_change(coins, amount):
+    dp = [0] + [float('inf')] * amount
+
+    for i in range(1, amount + 1):
+        for coin in coins:
+            if coin <= i:
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+
+    return dp[amount]
+
+
+# User input
+n = int(input("Enter number of coins: "))
+
+coins = []
+for i in range(n):
+    coin = int(input("Enter coin value: "))
+    coins.append(coin)
+
+amount = int(input("Enter amount: "))
+
+result = making_change(coins, amount)
+
+if result == float('inf'):
+    print("Change cannot be made")
+else:
+    print("Minimum number of coins =", result)
