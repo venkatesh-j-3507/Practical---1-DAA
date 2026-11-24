@@ -1,0 +1,51 @@
+def tsp(graph, n, start):
+    visited = [False] * n
+    visited[start] = True
+
+    path = [start]
+    cost = 0
+    current = start
+
+    for i in range(n - 1):
+        min_cost = 999
+        next_city = -1
+
+        for j in range(n):
+            if not visited[j] and graph[current][j] != 0:
+                if graph[current][j] < min_cost:
+                    min_cost = graph[current][j]
+                    next_city = j
+
+        if next_city == -1:
+            print("No complete tour possible")
+            return
+
+        cost += min_cost
+        current = next_city
+        visited[current] = True
+        path.append(current)
+
+    if graph[current][start] == 0:
+        print("No complete tour possible")
+        return
+
+    cost += graph[current][start]
+    path.append(start)
+
+    print("Tour:", path)
+    print("Minimum Cost:", cost)
+
+
+# User input
+n = int(input("Enter number of cities: "))
+
+graph = []
+
+print("Enter cost matrix:")
+for i in range(n):
+    row = list(map(int, input().split()))
+    graph.append(row)
+
+start = int(input("Enter starting city (0 to n-1): "))
+
+tsp(graph, n, start)
